@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@notionhq/client':
+        specifier: ^2.2.15
+        version: 2.2.15
       astro:
         specifier: ^5.0.5
         version: 5.0.5(@types/node@22.10.2)(rollup@4.28.1)(typescript@5.7.2)
