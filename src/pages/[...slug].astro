@@ -1,0 +1,63 @@
+---
+export const prerender = false;
+import Layout from "@layouts/Layout.astro";
+import { getDatabase, getBlock, getPages } from "../../notion.js";
+import { NOTION_DATABASE_ID } from "astro:env/client"
+
+export async function getStaticPaths() {
+  const databaseId = NOTION_DATABASE_ID;
+  const rawPages = await getDatabase(databaseId);
+  // console.log(rawPages);
+    const routes = rawPages.map((p: any) => {
+      return {
+        slug: p.properties.slug.rich_text[0].plain_text,
+        title: p.properties.Idea.title[0].plain_text,
+        id: p.id
+      }
+    })
+  
+const pages = [
+  ...routes
+]
+//   for (let index = 0; index < rawPages.length; index++) {
+//     let page = await getPages(rawPages[index].id);
+//     // console.log(page.properties.Idea.title[0].plain_text);
+    
+//   }
+// }
+
+return pages.map(({ slug, title, id }) => {
+    return {
+      params: { slug },
+      props: { title, id },
+    };
+  });
+}
+  // const {slug} = Astro.params
+  // const page = pages.find((page) => page.slug === slug);
+  // if (!page) return Astro.redirect("/404");
+  const {title, id} = Astro.props;
+
+  const blocks = await getBlock(id);
+  let toggleBlocksContent;
+  let content;
+
+    if(Object.hasOwn(blocks, 'children')){
+      toggleBlocksContent = await getBlock(blocks.children[2].id);
+    }
+---
+<Layout pageName="Blog">
+  <h1>{title}</h1>
+  <p>{id}</p>
+  <section>
+    {
+      toggleBlocksContent?.children[0].paragraph.rich_text.map(
+        (p: any) => p.href === null ?
+        <p>{p.plain_text}</p>
+        :
+        <p><a href={p.href}>{p.plain_text}</a></p>
+      )
+    }
+  </section>
+  <pre>{JSON.stringify(toggleBlocksContent, null, 2)}</pre>
+</Layout> 
