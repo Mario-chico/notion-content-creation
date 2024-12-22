@@ -1,5 +1,5 @@
 ---
-export const prerender = false;
+export const prerender = true;
 import Layout from "@layouts/Layout.astro";
 import { getDatabase, getBlock, getPages } from "../../notion.js";
 import { NOTION_DATABASE_ID } from "astro:env/client"
@@ -8,7 +8,7 @@ export async function getStaticPaths() {
   const databaseId = NOTION_DATABASE_ID;
   const rawPages = await getDatabase(databaseId);
   // console.log(rawPages);
-    const routes = rawPages.map((p: any) => {
+    const routes = rawPages?.map((p: any) => {
       return {
         slug: p.properties.slug.rich_text[0].plain_text,
         title: p.properties.Idea.title[0].plain_text,
@@ -17,7 +17,7 @@ export async function getStaticPaths() {
     })
   
 const pages = [
-  ...routes
+  ...(routes ?? [])
 ]
 //   for (let index = 0; index < rawPages.length; index++) {
 //     let page = await getPages(rawPages[index].id);
@@ -38,26 +38,41 @@ return pages.map(({ slug, title, id }) => {
   // if (!page) return Astro.redirect("/404");
   const {title, id} = Astro.props;
 
-  const blocks = await getBlock(id);
+  const blocks  = await getBlock(id);
   let toggleBlocksContent;
+
+  if(Object.hasOwn(blocks, 'children')){
+    toggleBlocksContent = await getBlock(blocks.children[2].id);
+  }
+
   let content;
 
-    if(Object.hasOwn(blocks, 'children')){
-      toggleBlocksContent = await getBlock(blocks.children[2].id);
-    }
 ---
 <Layout pageName="Blog">
   <h1>{title}</h1>
   <p>{id}</p>
   <section>
-    {
-      toggleBlocksContent?.children[0].paragraph.rich_text.map(
-        (p: any) => p.href === null ?
-        <p>{p.plain_text}</p>
-        :
-        <p><a href={p.href}>{p.plain_text}</a></p>
-      )
-    }
+    <p>
+
+      {
+        toggleBlocksContent?.children[0].paragraph.rich_text.map(
+          (p: any) => p.href === null ?
+          <p>{p.plain_text}</p>
+          :
+          <p><a href={p.href}>{p.plain_text}</a></p>
+        )
+      }
+    </p>
+    <!-- <pre>{JSON.stringify(blocks, null, 2)}</pre> -->
   </section>
-  <pre>{JSON.stringify(toggleBlocksContent, null, 2)}</pre>
 </Layout> 
+
+<style>
+  h1{
+    text-align: center;
+  }
+  p:has(a),
+  p:has(a) + p{
+    display: inline;
+  }
+</style>
