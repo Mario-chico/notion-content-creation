@@ -50,7 +50,7 @@ return pages.map(({ slug, title, id }) => {
 ---
 <Layout pageName="Blog">
   <h1>{title}</h1>
-  <p>{id}</p>
+  <!-- <p>{id}</p> -->
   <section>
     <p>
 
@@ -59,7 +59,7 @@ return pages.map(({ slug, title, id }) => {
           (p: any) => p.href === null ?
           <p>{p.plain_text}</p>
           :
-          <p><a href={p.href}>{p.plain_text}</a></p>
+          <p><a href={p.href} class="highlight">{p.plain_text}</a></p>
         )
       }
     </p>
@@ -68,11 +68,36 @@ return pages.map(({ slug, title, id }) => {
 </Layout> 
 
 <style>
-  h1{
-    text-align: center;
-  }
   p:has(a),
   p:has(a) + p{
     display: inline;
   }
+  h1 {
+      color: #BB86FC;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    p, section {
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+    }
+    p{
+      font-weight: bold;
+      
+      margin-top: 10px;
+    }
+    .highlight {
+      color: #CF6679;
+      font-style: italic;
+    }
+    section{
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+      background-color: #1F1F1F;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
 </style>
