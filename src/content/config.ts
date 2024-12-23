@@ -38,11 +38,11 @@ const database = defineCollection({
   }),
 });
 
-const mydb = defineCollection({
-  loader: notionLoader({
-    auth: '',
-    database_id: '',
-  }),
-})
+// const mydb = defineCollection({
+//   loader: notionLoader({
+//     auth: '',
+//     database_id: '',
+//   }),
+// })
 
-export const collections = { database, mydb };
+export const collections = { database };
