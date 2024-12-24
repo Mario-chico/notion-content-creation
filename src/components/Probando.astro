@@ -1,0 +1,53 @@
+---
+import { getCollection, render } from 'astro:content';
+
+const db = await getCollection('database');
+
+
+db.map((item) => (
+      console.log(item)
+    ))
+---
+
+<h1>Probando</h1>
+
+<section>
+  <ul>
+    {
+      db.map((item) => (
+        <li>
+          <a href={item.data.properties.slug.rich_text[0].plain_text} >{item.data.properties.Idea.title[0].plain_text}</a>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  /* Estilos generales para la lista */
+ul {
+  list-style: none; /* Elimina los puntos de la lista */
+  padding: 0;
+  margin: 0;
+  font-family: Arial, sans-serif; /* Elige una fuente legible */
+  color: #fff; /* Color blanco para contraste con el fondo oscuro */
+  line-height: 1.5; /* Espacio entre líneas para mayor legibilidad */
+}
+
+/* Estilos para cada elemento de la lista (li) */
+li {
+  margin-bottom: 10px; /* Espacio entre cada elemento */
+}
+
+/* Estilos para los enlaces (a) dentro de los elementos de la lista */
+a {
+  
+  color: #fff; /* Color blanco para los enlaces */
+  transition: color 0.3s ease-in-out; /* Efecto de transición al pasar el ratón */
+}
+
+/* Estilo para los enlaces al pasar el ratón */
+a:hover {
+  color: #007bff; /* Color azul claro al pasar el ratón */
+}
+</style>  
