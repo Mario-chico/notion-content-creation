@@ -5,16 +5,17 @@ const db = await getCollection('database');
 
 
 db.map((item) => (
-      console.log(item)
+      console.log(item.data.properties.Estado.select?.name)
     ))
 ---
 
-<h1>Probando</h1>
+<h1>Todas las ideas de la base de datos</h1>
 
 <section>
   <ul>
     {
       db.map((item) => (
+        item.data.properties.Estado.select?.name === "Publicado" &&
         <li>
           <a href={item.data.properties.slug.rich_text[0].plain_text} >{item.data.properties.Idea.title[0].plain_text}</a>
         </li>
