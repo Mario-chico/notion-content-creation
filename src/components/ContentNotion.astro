@@ -1,49 +1,11 @@
 ---
-import { getCollection } from 'astro:content';
+
 import { getDatabase, getBlock, getPages } from "../../notion.js";
 import { NOTION_DATABASE_ID } from "astro:env/client"
 
 const databaseId = NOTION_DATABASE_ID;
 const rawPages = await getDatabase(databaseId);
-// console.log(rawPages);
-if (rawPages !== undefined && rawPages !== null) {
 
-  for (let index = 0; index < rawPages.length; index++) {
-    let page = await getPages(rawPages[index].id);
-    // console.log(page.properties.Idea.title[0].plain_text);
-    
-  }
-}
-
-// const dataPage = rawPages.map((post: any) => post.properties.Idea.title[0].text.content);
-
-// const toggleBlockId = '1432970ee1e2816fa44afc4bb423ad2d'
-// const toggle = await getBlock(toggleBlockId);
-// const toggleBlock = toggle.children[0].paragraph.rich_text
-// console.log('block',toggleBlock.children[0].paragraph.rich_text[0]);
-
-// const blockId = '1432970ee1e281dfb31bf955fb619f5c';
-// const block = await getBlock(blockId);
-
-// const contentBlock = block.paragraph.rich_text
-
-
-
-// console.log('tu chains',dataPage);
-
-// const db = await getCollection('database');
-// const postsData = db.map((post: any) => post.definitions);
-// console.log('tuuuu chains',db.length);
-// console.log('snup di ou dobul g', postsData);
-// Object.entries(db.properties).forEach(([propertyName, propertyValue]) => {
-//     console.log(`${propertyName}: ${(propertyValue as {type: string}).type}`);
-// });
-// db.forEach((item) => {
-//   console.log(item.id, 'e mi colita');
-// });
-// const dbMy = await getCollection('mydb');
-// console.log(dbMy[0]?.data?.properties?.date, 'dbMy');
-const epa = 124;
 ---
 <h1>My db</h1>
 <ul>
