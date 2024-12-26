@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@notionhq/client": "^2.2.15",
-    "astro": "^5.0.5",
+    "astro": "^5.1.1",
     "notion-astro-loader": "^0.3.0"
   }
 }
