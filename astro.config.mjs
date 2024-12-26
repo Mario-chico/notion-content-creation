@@ -13,14 +13,6 @@ export default defineConfig({
        access: 'public',
        context: 'client', 
       }),
-      NOTION_DATABASE_ID_EXAMPLE:envField.string ({
-        access: 'public',
-        context: 'client', 
-       }),
-      NOTION_API_TOKEN_EXAMPLE:envField.string ({
-        access: 'secret',
-        context: 'server', 
-      }),
     },
   },
 });
