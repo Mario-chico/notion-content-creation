@@ -2,11 +2,6 @@
 import { getCollection, render } from 'astro:content';
 
 const db = await getCollection('database');
-
-
-db.map((item) => (
-      console.log(item.data.properties.Estado.select?.name)
-    ))
 ---
 
 <h1>Todas las ideas de la base de datos</h1>
@@ -15,7 +10,7 @@ db.map((item) => (
   <ul>
     {
       db.map((item) => (
-        item.data.properties.Estado.select?.name === "Publicado" &&
+        item.data.properties.Estado.select?.name === "Escribiendo" &&
         <li>
           <a href={item.data.properties.slug.rich_text[0].plain_text} >{item.data.properties.Idea.title[0].plain_text}</a>
         </li>
